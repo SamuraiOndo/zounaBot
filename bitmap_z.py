@@ -3,7 +3,7 @@ import sys
 import subprocess
 import requests
 import discord
-def extract_bitmap(attachment,channel):
+def extract_bitmap(attachment):
     with open(f"D:\\coding\\zouna bot\\{os.path.basename(attachment)}", "wb") as f:
         
         r = requests.get(attachment)
