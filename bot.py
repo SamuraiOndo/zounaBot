@@ -11,7 +11,7 @@ async def send_message(message, user_message,username, is_private=False):
         print(e)
     
 def run_discord_bot():
-    token = "TOKEN"
+    token = ""
     secret_id = 'SECRET_ID'
     bot = commands.Bot(command_prefix='.',intents=discord.Intents.all())
     @bot.event
@@ -68,12 +68,17 @@ def run_discord_bot():
     async def tl(ctx):
         await ctx.send("https://github.com/widberg/fmtk/wiki/TotemTech-ToonTech-Zouna-ACE-BSSTech-Opal-Timeline")
     @bot.command()
-    async def trans(ctx,*, message):
+    async def trans(ctx,language,*, message):
         destLang = message.split(" ")[0]
         print(destLang)
-        text = message[3:]
-        translation = GoogleTranslator(source='auto', target=destLang).translate(text)
-        await ctx.send(translation)
+        text = message
+        translation = GoogleTranslator(source='auto', target=language).translate(text)
+        if text.lower() == translation.lower(): 
+            await ctx.send("Translated text is the same as the original text")
+        elif ("http" in text.lower()):
+            await ctx.send("There is a link in the message. Please resend without the link.")
+        else:
+            await ctx.send(translation)
     @bot.listen()
     async def on_message(message):
         if message.author == bot.user:
